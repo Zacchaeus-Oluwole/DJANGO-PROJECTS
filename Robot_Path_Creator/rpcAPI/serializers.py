@@ -9,6 +9,7 @@ class PathSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DestinationSerializer(serializers.ModelSerializer):
+    direction = PathSerializer(many = True)
 
     class Meta:
         model = Destination
