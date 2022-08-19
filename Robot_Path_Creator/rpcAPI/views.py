@@ -9,7 +9,6 @@ from .models import Destination, Path
 class DestinationViewSet(viewsets.ModelViewSet):
     queryset = Destination.objects.all()
     serializer_class = DestinationSerializer
-    http_method_names = ['get','post','retrieve','put','patch']
 
 class PathViewSet(viewsets.ModelViewSet):
     queryset = Path.objects.all()
