@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Perpe{% endblock %}
+
+{% block content %}
+  <!-- <h1>Log-in</h1>
+  <p>Please, use the following form to log-in:</p> -->
+  <!-- <form method="post">
+    {{ form.as_p }}
+    
+    {% csrf_token %}
+    <p><input type="submit" value="Log in"></p>
+  </form> -->
+  <head>  
+    <meta charset="UTF-8">  
+    <title>Index</title>  
+    {% load static %}  
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css" /> -->
+
+  </head>  
+  <body>  
+    <form action="http://www.example.com/review.php" method="post">
+      {% csrf_token %}
+      <fieldset>
+        <legend>
+          Perpetrator Details:
+        </legend>
+        <br>
+        <div>
+          <label>
+            Name:
+          </label>
+            {{ form.name }}
+        </div>
+        <br>
+
+        <div>
+          <label>
+            Age:
+          </label>
+            {{ form.age }} 
+        </div>
+        <br>
+
+        <div>
+          <label>
+            Gender:
+          </label>
+          {% for radio in form.gender %}
+          <div>
+            {{ radio }}
+          </div>
+          {% endfor %}
+        </div>
+        <br>
+        
+        <div>
+          <label>
+            Date:
+            <br>
+            {{ form.date }}
+          </label>
+        </div>
+        <br>
+
+        <div class="container mt-5 pt-5 col-md-5">
+          <label>
+            Offence:
+          </label>
+          <div id="autocomplete" class="autocomplete">
+            {{ form.offence }}
+            <!-- <input class="autocomplete-input" /> -->
+            <div class="inp">
+              <br>
+              <ul class="autocomplete-result-list"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="big">
+          <p>
+
+          </p>
+        </div>
+        <input type="submit" value="Submit" />
+      </fieldset>
+    </form>
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <script>
+      new Autocomplete('#autocomplete', {
+        search : input => {
+          console.log(input)
+          const url = `/juristpage/search/?offence=${input}`
+          return new Promise(resolve => {
+            fetch(url)
+            .then(response => response.json())
+            .then(data =>{
+              // console.log(data)
+              resolve(data.data)
+            })
+          })
+        }
+      })
+    </script>
+  </body>
+{% endblock %}
