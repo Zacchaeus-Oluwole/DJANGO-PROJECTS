@@ -6,16 +6,18 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
+from dataset.models import Dataset
 
 # Create your views here.
 
 def perpe(request):
     if request.method == "POST":
         form = PerpetratorForm(request.POST)
+        niceR = form.data['offence']
         if form.is_valid():
             try:
                 form.save()
-                return redirect('/show')
+                return redirect('/juristpage/result/?offence=' + niceR)
             except:
                 pass
     else:
@@ -23,13 +25,10 @@ def perpe(request):
     return render(request,'index.html', {'form':form})
 
 
-def show(request):
-    perpetrators = Perpetrator.objects.all()
-    return render(request,'show.html',{'perpetrators':perpetrators})
-
-def edit(request, id = 1):
-    perpetrator = Perpetrator.objects.get(id = id)
-    return render(request, 'edit.html', {'perpetrator':perpetrator})
+def result(request):
+    offence_d = request.GET.get('offence')
+    dataset = Dataset.objects.filter(offence = offence_d)
+    return render(request, 'result.html', {'dataset':dataset})
 
 def search_offence(request):
     offence_i = request.GET.get('offence')
@@ -38,6 +37,7 @@ def search_offence(request):
 
     if offence_i:
         dataset = Dataset.objects.all()
+        # print(dataset.law, "Hee")
         data = set()
         qsN = len(offence_i)
         c = qsN

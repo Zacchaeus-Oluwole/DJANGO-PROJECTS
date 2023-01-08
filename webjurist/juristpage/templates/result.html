@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Perpe{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Index</title>  
+    {% load static %}  
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>  
+</head>  
+<body>   
+
+  <fieldset>
+    <legend>
+      <b>Result</b>
+    </legend>
+    <br>
+    <div class="container">  
+      <br>
+      {% for data in dataset %}   
+        <label class="col-sm-2 col-form-label">{{ data.offence }}</label>
+        <br> 
+        <label class="col-sm-2 col-form-label"><h3> Section: {{ data.cca_section }} </h3></label> 
+        <br>
+        <label class="col-sm-2 col-form-label">{{ data.law }}</label>
+        <br>  
+        <label class="col-sm-2 col-form-label"><b>The penalty is {{ data.penalty }}</b></label>
+        <br>  
+      {% endfor %}    
+    </div>
+  </fieldset>
+</body>  
+</html> 
+{% endblock %}
